@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portofolio Alin Juliani, siswi Rekayasa Perangkat Lunak SMKN 1 Kawali.">
+    <meta name="theme-color" content="#eaf6ff">
+    <title>Alin Juliani — Portfolio</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --blue: #69aee8;
+            --blue-dark: #347fbd;
+            --blue-deep: #22577d;
+            --sky: #eaf6ff;
+            --sky-2: #d9efff;
+            --ink: #18364d;
+            --muted: #688196;
+            --white: #ffffff;
+            --line: #dcecf7;
+            --shadow: 0 20px 60px rgba(63, 132, 183, .13);
+            --round: 26px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 95px; }
+        body {
+            font-family: "DM Sans", sans-serif;
+            color: var(--ink);
+            background: #f8fcff;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        a { color: inherit; }
+        button { font: inherit; }
+        .container { width: min(1120px, calc(100% - 44px)); margin: 0 auto; }
+        .section { padding: 108px 0; position: relative; }
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--blue-dark);
+            font-size: .76rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+        .section-label::before {
+            content: "";
+            width: 25px;
+            height: 2px;
+            border-radius: 3px;
+            background: var(--blue);
+        }
+        .section-title {
+            font: 800 clamp(2.1rem, 5vw, 3.35rem)/1.13 "Manrope", sans-serif;
+            letter-spacing: -1.8px;
+            color: var(--ink);
+        }
+        .section-desc { max-width: 590px; color: var(--muted); margin-top: 15px; }
+        .soft-shape {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            filter: blur(1px);
+            z-index: -1;
+        }
+
+        /* NAVBAR */
+        .site-header {
+            position: fixed;
+            z-index: 100;
+            inset: 0 0 auto;
+            background: rgba(248, 252, 255, .82);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(220, 236, 247, .8);
+            transition: box-shadow .25s ease;
+        }
+        .site-header.scrolled { box-shadow: 0 8px 30px rgba(45, 103, 146, .08); }
+        .nav {
+            height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            text-decoration: none;
+            color: var(--ink);
+            font: 800 1.25rem "Manrope", sans-serif;
+            letter-spacing: -1px;
+        }
+        .logo span { color: var(--blue-dark); }
+        .nav-menu { display: flex; align-items: center; gap: 34px; list-style: none; }
+        .nav-menu a {
+            text-decoration: none;
+            color: #617d91;
+            font-size: .91rem;
+            font-weight: 700;
+            transition: color .2s;
+        }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--blue-dark); }
+        .nav-contact {
+            text-decoration: none;
+            padding: 10px 17px;
+            color: var(--blue-deep);
+            background: var(--sky-2);
+            border-radius: 30px;
+            font-size: .88rem;
+            font-weight: 800;
+            transition: .2s;
+        }
+        .nav-contact:hover { background: #c9e7fc; transform: translateY(-2px); }
+        .menu-toggle {
+            display: none;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            color: var(--ink);
+            background: white;
+            cursor: pointer;
+            font-size: 1.35rem;
+        }
+
+        /* HOME */
+        .home {
+            min-height: 760px;
+            padding: 155px 0 105px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse at 80% 20%, rgba(179, 222, 250, .55), transparent 33%),
+                radial-gradient(ellipse at 10% 90%, rgba(218, 241, 255, .9), transparent 35%),
+                linear-gradient(135deg, #f8fcff 0%, #edf8ff 58%, #e5f4ff 100%);
+        }
+        .home::before {
+            content: "";
+            position: absolute;
+            width: 420px;
+            height: 420px;
+            border: 1px solid rgba(76, 153, 211, .17);
+            border-radius: 50%;
+            right: -180px;
+            top: 110px;
+        }
+        .home::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border: 1px dashed rgba(76, 153, 211, .22);
+            border-radius: 50%;
+            right: -100px;
+            top: 190px;
+        }
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1.12fr .88fr;
+            align-items: center;
+            gap: 70px;
+            position: relative;
+            z-index: 1;
+        }
+        .intro-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 14px;
+            background: rgba(255,255,255,.78);
+            border: 1px solid #d7ebf9;
+            border-radius: 30px;
+            color: var(--blue-deep);
+            font-size: .82rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 20px rgba(67, 135, 184, .06);
+        }
+        .intro-chip span { color: #e9ad58; font-size: 1rem; }
+        .home h1 {
+            font: 800 clamp(3.2rem, 7vw, 5.7rem)/1.02 "Manrope", sans-serif;
+            letter-spacing: -4px;
+            color: var(--ink);
+        }
+        .home h1 .name { color: var(--blue-dark); }
+        .home-subtitle {
+            font: 700 1.05rem "Manrope", sans-serif;
+            color: #4f7895;
+            margin: 22px 0 13px;
+        }
+        .home-text {
+            max-width: 560px;
+            color: var(--muted);
+            font-size: 1rem;
+        }
+        .home-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 31px; }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 21px;
+            border-radius: 13px;
+            text-decoration: none;
+            font-size: .91rem;
+            font-weight: 800;
+            transition: transform .22s, box-shadow .22s, background .22s;
+        }
+        .btn:hover { transform: translateY(-3px); }
+        .btn-primary {
+            color: white;
+            background: var(--blue-dark);
+            box-shadow: 0 10px 24px rgba(52, 127, 189, .23);
+        }
+        .btn-primary:hover { background: #286da7; box-shadow: 0 13px 27px rgba(52,127,189,.28); }
+        .btn-light { color: var(--blue-deep); background: white; border: 1px solid #d8eaf6; }
+        .btn-light:hover { box-shadow: 0 9px 22px rgba(63,132,183,.1); }
+
+        .visual-area { min-height: 420px; position: relative; display: grid; place-items: center; }
+        .orbit {
+            position: absolute;
+            width: 365px;
+            height: 365px;
+            border: 1px solid rgba(70, 145, 201, .25);
+            border-radius: 50%;
+        }
+        .orbit::before, .orbit::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            background: white;
+            border: 1px solid #d9edf9;
+        }
+        .orbit::before { width: 14px; height: 14px; top: 42px; right: 44px; }
+        .orbit::after { width: 10px; height: 10px; bottom: 40px; left: 18px; }
+        .portrait-card {
+            width: 270px;
+            height: 340px;
+            padding: 11px;
+            background: rgba(255,255,255,.9);
+            border: 1px solid white;
+            border-radius: 150px 150px 35px 35px;
+            box-shadow: 0 25px 65px rgba(62, 130, 181, .18);
+            transform: rotate(3deg);
+            position: relative;
+            z-index: 2;
+        }
+        .portrait-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 140px 140px 27px 27px;
+            background: linear-gradient(150deg, #d4ecfc, #a9d5f2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #477da5;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+        }
+        .portrait-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            inset: 0;
+        }
+        .portrait-placeholder .photo-symbol { font-size: 3.3rem; opacity: .8; }
+        .portrait-placeholder small { font-size: .75rem; font-weight: 700; margin-top: 8px; }
+        .float-note {
+            position: absolute;
+            z-index: 3;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e0eff9;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            color: var(--blue-deep);
+            font-size: .79rem;
+            font-weight: 800;
+        }
+        .note-top { top: 44px; right: -2px; transform: rotate(5deg); }
+        .note-bottom { bottom: 43px; left: -10px; transform: rotate(-5deg); }
+        .sparkle { position: absolute; color: #e9b85f; font-size: 1.6rem; }
+        .sparkle.one { top: 45px; left: 35px; }
+        .sparkle.two { bottom: 48px; right: 30px; font-size: 1.1rem; }
+
+        /* ABOUT */
+        .about { background: #fff; }
+        .about-layout {
+            display: grid;
+            grid-template-columns: .78fr 1.22fr;
+            gap: 70px;
+            align-items: start;
+        }
+        .about-side {
+            position: sticky;
+            top: 125px;
+            padding: 30px;
+            border-radius: var(--round);
+            background: linear-gradient(145deg, #eaf6ff, #f5fbff);
+            border: 1px solid #dfedf7;
+        }
+        .about-side .big-quote {
+            font: 800 5rem/.8 "Manrope", sans-serif;
+            color: #9ccbea;
+        }
+        .about-side p { color: #52748d; font: 700 1.14rem/1.6 "Manrope", sans-serif; margin-top: 20px; }
+        .about-side .tiny-line { width: 45px; height: 3px; background: var(--blue); border-radius: 4px; margin-top: 23px; }
+        .about-copy p { color: var(--muted); margin-bottom: 17px; }
+        .about-copy p strong { color: var(--ink); }
+        .about-facts {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+            margin-top: 30px;
+        }
+        .fact {
+            padding: 17px 18px;
+            background: #f5faff;
+            border: 1px solid #e3f0f9;
+            border-radius: 15px;
+        }
+        .fact small { display: block; color: #8aa3b6; font-size: .72rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        .fact strong { display: block; color: var(--blue-deep); font-size: .94rem; margin-top: 5px; }
+
+        /* PROJECT */
+        .projects {
+            background:
+                radial-gradient(circle at 95% 10%, rgba(202, 232, 251, .55), transparent 24%),
+                #f1f8fd;
+        }
+        .project-list { display: grid; gap: 22px; margin-top: 42px; }
+        .project-card {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            overflow: hidden;
+            background: white;
+            border: 1px solid #dfedf7;
+            border-radius: var(--round);
+            box-shadow: 0 13px 35px rgba(63,132,183,.07);
+            transition: transform .25s, box-shadow .25s;
+        }
+        .project-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+        .project-art {
+            min-height: 245px;
+            display: grid;
+            place-items: center;
+            padding: 25px;
+            background: linear-gradient(145deg, #d8efff, #eef8ff);
+        }
+        .project-card:nth-child(2) .project-art { background: linear-gradient(145deg, #e3eaff, #f0f5ff); }
+        .mock-window {
+            width: 100%;
+            max-width: 225px;
+            padding: 12px;
+            border-radius: 13px;
+            background: rgba(255,255,255,.95);
+            box-shadow: 0 15px 35px rgba(57,117,163,.15);
+            transform: rotate(-3deg);
+        }
+        .project-card:nth-child(2) .mock-window { transform: rotate(3deg); }
+        .mock-bar { display: flex; gap: 4px; padding-bottom: 10px; border-bottom: 1px solid #edf3f8; }
+        .mock-bar i { width: 6px; height: 6px; border-radius: 50%; background: #b8d7ec; }
+        .mock-heading { width: 58%; height: 11px; border-radius: 5px; background: #69aee8; margin: 15px 0 9px; }
+        .mock-line { height: 6px; width: 88%; background: #e8f1f8; border-radius: 5px; margin: 6px 0; }
+        .mock-line.short { width: 58%; }
+        .mock-tiles { display: flex; gap: 7px; margin-top: 13px; }
+        .mock-tiles span { flex: 1; height: 42px; border-radius: 6px; background: #e7f3fc; }
+        .mock-tiles span:nth-child(2) { background: #d1eaff; }
+        .project-content { padding: 31px 35px; align-self: center; }
+        .project-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .project-type {
+            color: var(--blue-dark);
+            background: #eaf6ff;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .6px;
+        }
+        .project-year { color: #9aafbf; font-size: .76rem; font-weight: 700; }
+        .project-content h3 { font: 800 1.45rem "Manrope", sans-serif; color: var(--ink); margin: 13px 0 9px; }
+        .project-content p { color: var(--muted); font-size: .92rem; }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+        .project-tags span {
+            color: #5e819b;
+            background: #f5faff;
+            border: 1px solid #e2eff8;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: .75rem;
+            font-weight: 700;
+        }
+
+        /* CONTACT */
+        .contact { background: white; padding-bottom: 80px; }
+        .contact-box {
+            position: relative;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr .8fr;
+            gap: 45px;
+            align-items: center;
+            padding: 55px;
+            border-radius: 32px;
+            color: white;
+            background: linear-gradient(125deg, #397eaf, #6eb6e9);
+            box-shadow: 0 22px 55px rgba(52,127,189,.2);
+        }
+        .contact-box::before, .contact-box::after {
+            content: "";
+            position: absolute;
+            border: 1px solid rgba(255,255,255,.17);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .contact-box::before { width: 360px; height: 360px; right: -120px; top: -220px; }
+        .contact-box::after { width: 250px; height: 250px; right: -65px; top: -165px; }
+        .contact-copy, .contact-details { position: relative; z-index: 1; }
+        .contact-copy .section-label { color: #d9efff; }
+        .contact-copy .section-label::before { background: white; }
+        .contact-copy h2 { font: 800 clamp(2rem, 4vw, 3rem)/1.15 "Manrope", sans-serif; letter-spacing: -1.4px; }
+        .contact-copy p { color: #e5f4ff; max-width: 440px; margin-top: 15px; }
+        .contact-details { display: grid; gap: 12px; }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 14px 16px;
+            border: 1px solid rgba(255,255,255,.28);
+            border-radius: 15px;
+            background: rgba(255,255,255,.12);
+            text-decoration: none;
+            transition: background .2s, transform .2s;
+        }
+        .contact-link:hover { background: rgba(255,255,255,.22); transform: translateX(4px); }
+        .contact-icon {
+            display: grid;
+            place-items: center;
+            width: 39px;
+            height: 39px;
+            flex: 0 0 39px;
+            color: var(--blue-deep);
+            background: white;
+            border-radius: 12px;
+            font-weight: 800;
+        }
+        .contact-link small { display: block; color: #d8efff; font-size: .7rem; }
+        .contact-link strong { display: block; color: white; font-size: .87rem; overflow-wrap: anywhere; }
+        footer { padding: 25px 0; color: #91a9bb; text-align: center; font-size: .82rem; background: #f8fcff; }
+        footer span { color: var(--blue-dark); font-weight: 800; }
+
+        /* ANIMASI SAAT SCROLL */
+        .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 850px) {
+            .home-grid { gap: 25px; grid-template-columns: 1fr  .8fr; }
+            .visual-area { transform: scale(.88); }
+            .about-layout { gap: 35px; }
+            .project-card { grid-template-columns: 245px 1fr; }
+            .contact-box { padding: 40px; }
+        }
+        @media (max-width: 680px) {
+            .container { width: min(100% - 34px, 1120px); }
+            .nav { height: 72px; }
+            .menu-toggle { display: grid; place-items: center; }
+            .nav-contact { display: none; }
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                padding: 22px;
+                background: rgba(255,255,255,.98);
+                border-bottom: 1px solid var(--line);
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 18px;
+            }
+            .nav-menu.open { display: flex; }
+            .home { min-height: auto; padding: 130px 0 75px; }
+            .home-grid { grid-template-columns: 1fr; text-align: center; gap: 20px; }
+            .home h1 { letter-spacing: -2.5px; }
+            .home-text { margin: auto; }
+            .home-actions { justify-content: center; }
+            .visual-area { min-height: 370px; transform: none; }
+            .orbit { width: 310px; height: 310px; }
+            .portrait-card { width: 225px; height: 290px; }
+            .note-top { right: 0; top: 35px; }
+            .note-bottom { left: 0; bottom: 30px; }
+            .section { padding: 78px 0; }
+            .about-layout { grid-template-columns: 1fr; }
+            .about-side { position: static; }
+            .project-card { grid-template-columns: 1fr; }
+            .project-art { min-height: 210px; }
+            .project-content { padding: 26px; }
+            .contact-box { grid-template-columns: 1fr; gap: 28px; padding: 31px 25px; }
+        }
+        @media (max-width: 390px) {
+            .home h1 { font-size: 2.85rem; }
+            .home-actions .btn { width: 100%; }
+            .about-facts { grid-template-columns: 1fr; }
+            .visual-area { transform: scale(.92); margin: -10px 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+            .reveal { opacity: 1; transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGASI -->
+    <header class="site-header" id="siteHeader">
+        <nav class="nav container" aria-label="Navigasi utama">
+            <a href="#home" class="logo">AJ<span>.</span></a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">☰</button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#project">Project</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+
+            <a href="#contact" class="nav-contact">Let's talk ↗</a>
+        </nav>
+    </header>
+
+    <main>
+        <!-- HOME / LANDING -->
+        <section class="home" id="home">
+            <div class="container home-grid">
+                <div class="home-content reveal">
+                    <div class="intro-chip"><span>✦</span> Welcome to my little space</div>
+                    <h1>Hi, I'm<br><span class="name">Alin Juliani.</span></h1>
+                    <p class="home-text">
+                        Sedang belajar, mencoba, dan bertumbuh lewat dunia teknologi.
+                        Di sini, saya berbagi sedikit cerita tentang diri saya dan
+                        beberapa karya yang pernah saya buat selama belajar.
+                    </p>
+                    <div class="home-actions">
+                        <a href="#project" class="btn btn-primary">Explore my work <span>↗</span></a>
+                        <a href="#about" class="btn btn-light">More about me</a>
+                    </div>
+                </div>
+
+                <div class="visual-area reveal">
+                    <div class="orbit"></div>
+                    <span class="sparkle one">✳</span>
+                    <span class="sparkle two">✦</span>
+                    <div class="portrait-card">
+                        <div class="portrait-placeholder">
+                            <!-- Ganti foto.jpg dengan foto kamu. Simpan fotonya di folder yang sama dengan index.html. -->
+                            <img src="foto.jpg" alt="Foto Alin Juliani"
+                                 onerror="this.style.display='none'">
+                            <small>YOUR PHOTO HERE</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT -->
+        <section class="section about" id="about">
+            <div class="container about-layout">
+                <div class="about-side reveal">
+                    <div class="big-quote">“</div>
+                    <p>Masih belajar, masih mencoba, dan selalu punya ruang untuk berkembang.</p>
+                    <div class="tiny-line"></div>
+                </div>
+
+                <div class="about-copy reveal">
+                    <span class="section-label">Get to know me</span>
+                    <h2 class="section-title">A little bit<br>about myself.</h2>
+                    <p>
+                        Halo! Saya <strong>Alin Juliani</strong>, siswi jurusan
+                        <strong>Rekayasa Perangkat Lunak (RPL) di SMKN 1 Kawali</strong>.
+                        Saya mulai mengenal dunia pemrograman dari kegiatan belajar di sekolah,
+                        terutama tentang bagaimana sebuah website dibuat dan bekerja.
+                    </p>
+                    <p>
+                        Selama belajar RPL, saya berkesempatan mencoba beberapa teknologi
+                        seperti HTML, CSS, PHP, MySQL, dan Laravel. Awalnya mungkin banyak
+                        hal yang terasa baru, tetapi dari situ saya belajar untuk lebih teliti,
+                        mencari tahu saat menemukan kesulitan, dan memahami prosesnya sedikit demi sedikit.
+                    </p>
+                    <p>
+                        Saat ini saya juga sedang menjalani pengalaman PKL. Buat saya,
+                        pengalaman tersebut menjadi kesempatan untuk mengenal suasana kerja
+                        secara langsung, belajar menyelesaikan tugas, dan menerapkan ilmu
+                        yang sebelumnya saya dapatkan di sekolah.
+                    </p>
+                    <p>
+                        Saya belum merasa menguasai semuanya. Masih banyak hal yang ingin
+                        saya pelajari, dan saya ingin terus mengembangkan kemampuan melalui
+                        pengalaman serta proyek-proyek berikutnya.
+                    </p>
+
+                    <div class="about-facts">
+                        <div class="fact">
+                            <small>Education</small>
+                            <strong>SMKN 1 Kawali</strong>
+                        </div>
+                        <div class="fact">
+                            <small>Jurusan</small>
+                            <strong>Rekayasa Perangkat Lunak</strong>
+                        </div>
+                        <div class="fact">
+                            <small>Focus</small>
+                            <strong>Web Development</strong>
+                        </div>
+                        <div class="fact">
+                            <small>Currently</small>
+                            <strong>Learning & Exploring</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECT -->
+        <section class="section projects" id="project">
+            <div class="container">
+                <div class="reveal">
+                    <span class="section-label">Selected works</span>
+                    <h2 class="section-title">Things I've<br>worked on.</h2>
+                    <p class="section-desc">
+                        Beberapa proyek yang pernah saya kerjakan selama belajar di sekolah.
+                        Setiap proyek memberi pengalaman dan pelajaran yang berbeda.
+                    </p>
+                </div>
+
+                <div class="project-list">
+                    <article class="project-card reveal">
+                        <div class="project-art" aria-hidden="true">
+                            <div class="mock-window">
+                                <div class="mock-bar"><i></i><i></i><i></i></div>
+                                <div class="mock-heading"></div>
+                                <div class="mock-line"></div>
+                                <div class="mock-line short"></div>
+                                <div class="mock-tiles"><span></span><span></span><span></span></div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-type">UJIAN KOMPETENSI KEAHLIAN</span>
+                                <span class="project-year">Proyek sekolah</span>
+                            </div>
+                            <h3>Company Profile</h3>
+                            <p>
+                                Website company profile yang saya kerjakan sebagai bagian dari
+                                Ujian Kompetensi Keahlian (UKK). Proyek ini menjadi pengalaman
+                                dalam membuat website untuk memperkenalkan profil dan informasi
+                                sebuah perusahaan, sekaligus menerapkan materi yang sudah dipelajari.
+                            </p>
+                            <div class="project-tags">
+                                <span>Laravel</span>
+                                <span>PHP</span>
+                                <span>MySQL</span>
+                                <span>Web Development</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="project-card reveal">
+                        <div class="project-art" aria-hidden="true">
+                            <div class="mock-window">
+                                <div class="mock-bar"><i></i><i></i><i></i></div>
+                                <div class="mock-heading"></div>
+                                <div class="mock-line short"></div>
+                                <div class="mock-line"></div>
+                                <div class="mock-tiles"><span></span><span></span><span></span></div>
+                            </div>
+                        </div>
+                        <div class="project-content">
+                            <div class="project-meta">
+                                <span class="project-type">TUGAS AKHIR KELAS XI</span>
+                                <span class="project-year">Proyek sekolah</span>
+                            </div>
+                            <h3>Buku Tamu Digital</h3>
+                            <p>
+                                Aplikasi buku tamu digital yang dibuat sebagai tugas akhir
+                                kelas XI. Proyek ini berfokus pada pencatatan data pengunjung
+                                secara digital. Dari pengerjaannya, saya belajar menyusun
+                                form, mengolah data, dan menghubungkan website dengan database.
+                            </p>
+                            <div class="project-tags">
+                                <span>PHP</span>
+                                <span>MySQL</span>
+                                <span>HTML</span>
+                                <span>CSS</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section contact" id="contact">
+            <div class="container">
+                <div class="contact-box reveal">
+                    <div class="contact-copy">
+                        <span class="section-label">Get in touch</span>
+                        <h2>Let's connect<br>and say hello!</h2>
+                        <p>
+                            Terima kasih sudah meluangkan waktu untuk melihat portofolio saya.
+                            Kalau ingin berkenalan atau menghubungi saya, bisa melalui kontak berikut.
+                        </p>
+                    </div>
+
+                    <div class="contact-details">
+                        <a class="contact-link" href="mailto:julianialin053@gmail.com">
+                            <span class="contact-icon">✉</span>
+                            <span>
+                                <small>Email</small>
+                                <strong>julianialin053@gmail.com</strong>
+                            </span>
+                        </a>
+                        <a class="contact-link"
+                        href="https://www.instagram.com/juliani.alin?xtok=MThkbTU0bzFoOW9wOA=="
+                        target="blank"
+                        rel="noopener noreferrer">
+                        <span class="contact-icon">
+                          <svg width="22" height="22" viewBox="0 0 24 24"
+                            fill="none" stroke="currentColor"
+                           stroke-width="2" stroke-linecap="round"
+                           stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+                       <circle cx="12" cy="12" r="4"></circle>
+                     <circle cx="17.5" cy="6.5" r="1"></circle>
+                  </svg>
+              </span>
+
+            <span>
+               <small>Instagram</small>
+               <strong>@juliani.alin</strong>
+             </span>
+                        </a> 
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">Made with care by <span>Alin Juliani</span> · © <span id="year"></span></div>
+    </footer>
+
+    <script>
+        // Menu navigasi untuk tampilan HP
+        const menuToggle = document.getElementById("menuToggle");
+        const navMenu = document.getElementById("navMenu");
+        const navLinks = document.querySelectorAll(".nav-menu a");
+        const header = document.getElementById("siteHeader");
+
+        menuToggle.addEventListener("click", function () {
+            const isOpen = navMenu.classList.toggle("open");
+            menuToggle.setAttribute("aria-expanded", isOpen);
+            menuToggle.textContent = isOpen ? "×" : "☰";
+        });
+
+        // Tutup menu setelah salah satu tautan dipilih
+        navLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                navMenu.classList.remove("open");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        // Efek header saat halaman digulir
+        window.addEventListener("scroll", function () {
+            header.classList.toggle("scrolled", window.scrollY > 20);
+        });
+
+        // Menampilkan elemen secara halus ketika masuk ke layar
+        const revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll(".reveal").forEach(function (element) {
+            revealObserver.observe(element);
+        });
+
+        // Tahun otomatis di footer
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+</body>
+</html>
